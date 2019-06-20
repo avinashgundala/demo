@@ -1,0 +1,278 @@
+{% extends 'base_template/index.html' %}
+
+{% block extra_css %}
+
+<style type="text/css">
+input {
+    outline: none;
+    border: none;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+textarea {
+  outline: none;
+  border: none;
+}
+
+textarea:focus, input:focus {
+  border-color: transparent !important;
+}
+
+input:focus::-webkit-input-placeholder { color:transparent; }
+input:focus:-moz-placeholder { color:transparent; }
+input:focus::-moz-placeholder { color:transparent; }
+input:focus:-ms-input-placeholder { color:transparent; }
+
+textarea:focus::-webkit-input-placeholder { color:transparent; }
+textarea:focus:-moz-placeholder { color:transparent; }
+textarea:focus::-moz-placeholder { color:transparent; }
+textarea:focus:-ms-input-placeholder { color:transparent; }
+
+input::-webkit-input-placeholder { color: #adadad;}
+input:-moz-placeholder { color: #adadad;}
+input::-moz-placeholder { color: #adadad;}
+input:-ms-input-placeholder { color: #adadad;}
+
+textarea::-webkit-input-placeholder { color: #adadad;}
+textarea:-moz-placeholder { color: #adadad;}
+textarea::-moz-placeholder { color: #adadad;}
+textarea:-ms-input-placeholder { color: #adadad;}
+
+/*---------------------------------------------*/
+button {
+    outline: none !important;
+    border: none;
+    background: transparent;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+iframe {
+    border: none !important;
+}
+        </style>
+{% endblock %}
+
+        {% block body %}
+
+
+        <div class="container-contact100">
+            <div class="wrap-contact100" style="margin-top: 100px;">
+                <div class="contact100-form validate-form">
+                    <span class="contact100-form-title">
+
+                    </span>
+
+                    <div class="wrap-input100 input100-select bg1 rs1-wrap-input100">
+                        <span class="label-input100">User</span>
+                        <div>
+                            <select class="js-select2" name="user_name" id="user_id" onchange=filter()>
+                                <option value="">Select-User</option>
+                                {% for user_input in instance_users %}
+                                {% if get_user_id == user_input.id %}
+                                <option value="{{user_input.id}}" selected>{{ user_input.first_name}}</option>
+                                {% else %}
+                                <option value="{{user_input.id}}" >{{ user_input.first_name}}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                            <div class="dropDownSelect2"></div>
+                        </div>
+                    </div>
+
+                    <div class="wrap-input100 bg1 rs1-wrap-input100">
+                        <span class="label-input100">Role</span>
+                        <!-- <div id="role_filter">
+
+                        </div> -->
+                        <div><span id="role_filter"></span></div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <th>Product</th>
+                                <th>UserId</th>
+                                <th>Password</th>
+                                <th class="alert-div">Alert</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                  <td>
+                                       <select class="js-select2" id="product_id" name="product" required>
+                                            <option value="">Select-Product</option>
+                                            <option value="AptaHR" >AptaHR </option>
+                                            <option value="Aiila">Aiila</option>
+                                            <option value="job Rocket">job Rocket</option>
+                                            <option value="Teknovel" >Teknovel </option>
+                                    </select>
+                                  </td>
+                                    <td>
+                                        <div class="wrap-input100 bg1">
+                                            <input class="input100" type="email" name ="email_name" id="email_id" placeholder="Enter Email" required>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="wrap-input100 bg1">
+                                            <input class="input100" type="password" name="password_name" id="password_id" placeholder="Enter Password" required>
+                                        </div>
+                                    </td>
+                                    <td class="alert-div">
+                                        <div class="wrap-input100 bg1">
+                                            <input class="input100" type="text" name="alert_name" id="alert_id" placeholder="In minutes" required>
+                                        </div>
+                                    </td>
+                                </tr>
+<!--
+                                <tr>
+                                    <td>Product 2</td>
+                                    <td>
+                                        <select class="js-select2" name="service">
+                                            <option>User 1</option>
+                                            <option>User 2</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <div class="wrap-input100 bg1 rs1-wrap-input100">
+                                            <span class="label-input100">Password</span>
+                                            <input class="input100" type="password" name="phone" placeholder="Enter Password">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        Alert Time (18 Hrs)
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Product 3</td>
+                                    <td>
+                                        <select class="js-select2" name="service">
+                                            <option>User 1</option>
+                                            <option>User 2</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <div class="wrap-input100 bg1 rs1-wrap-input100">
+                                            <span class="label-input100">Password</span>
+                                            <input class="input100" type="password" name="phone" placeholder="Enter Password">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        Alert Time (18 Hrs)
+                                    </td>
+                                </tr> -->
+                                <div class="product_filter">
+
+                                </div>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+
+    {% block javascript %}
+    <!-- <script type="text/javascript">
+        var role;
+        function filter(event) {
+        $.get('{{request.path}}filter/?user_name=' + $("select[name='user_name']").val(), function (result) {
+            role = result.instance_users
+            if(role == "Agent"){
+                $(".alert-div").hide();
+            }
+            else{
+                $(".alert-div").show();
+            }
+            $('#role_filter').text(result.instance_users);
+
+          })
+        };
+    </script> -->
+
+<!------------------- product form ajax ----------------------->
+    <!-- <script type="text/javascript">
+        function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                // Only send the token to relative URLs i.e. locally.
+                xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+
+            }
+        }
+    });
+
+      $(function () {
+          var fileids = "";
+        $(document).on("focusout","#alert_id",function(){alert(role)
+            var myFormData = new FormData()
+            myFormData.append('user',document.getElementById("user_id").value)
+            myFormData.append('products',document.getElementById("product_id").value)
+            myFormData.append('email',document.getElementById("email_id").value)
+            myFormData.append('password',document.getElementById("password_id").value)
+            if(role == "Client"){
+                myFormData.append('alert',document.getElementById("alert_id").value)
+                for (var pair of myFormData.entries()) {
+                    console.log(pair[0]+ ', ' + pair[1]);
+                   }
+            }
+            else {
+                for (var pair of myFormData.entries()) {
+                    console.log(pair[0]+ ', ' + pair[1]);
+                   }
+            }
+
+          $.ajax({
+            url:'form_submit',
+            data:myFormData,
+            type:'POST',
+            processData: false, // important
+            contentType: false, // important
+            datatype:'json',
+            beforeSend: function(xhr, settings) {
+                $.ajaxSettings.beforeSend(xhr, settings);
+                },
+            success:function(data){
+              if (data.form_is_valid) {
+                $(".product_filter").append(data.html_created_product);
+                // fileids = fileids + data.html_ticket_file_id;
+                // $("#fileids").val(fileids);
+          }
+
+            },
+        });
+
+        return false;
+      });
+       });
+
+
+    </script>
+    <!-- script for password match --> -->
+    {% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base_template/index.html' %}
+
+<form  method="post">
+    {{ assign_form.product }}
+    {{ assign_form.product.email }}
+    {{ assign_form.product.password }}
+    {{ assign_form.product.alert }}
+    <button class="btn common-btn">Submit</button>
+
+
+</form>

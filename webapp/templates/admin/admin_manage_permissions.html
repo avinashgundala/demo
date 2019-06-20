@@ -1,0 +1,192 @@
+{% extends 'base_template/index.html' %}
+
+{% block meta_tag %}
+    <meta name="description" content="" />
+    <meta property="og:title" content="JobRocket" />
+    <meta property="og:url" content="web page path" />
+    <meta property="og:description" content="">
+    <meta property="og:image" content="image PATH">
+{% endblock %}
+
+{% block body %}
+<div class="content-height">
+    <div class="breadcrumbs">
+        <div class="breadcrumbs-inner">
+            <div class="row m-0">
+                <div class="col-sm-12">
+                    <div class="page-header">
+                        <div class="page-title text-center">
+                            <h1>Manage Permissions</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="animated fadeIn">
+
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="card-title">List of Assign Permissions</strong>
+                            <button class="btn common-btn pull-right" data-toggle="modal" data-target="#assign_product">Assign permission</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table  ">
+                                    <thead>
+                                        <tr>
+                                            <th>Project Name</th>
+                                            <th>Product User</th>
+                                            <th>Product Password</th>
+                                            <th>Product Time</th>
+                                            <th>status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for project in instance_permissions %}
+                                        <tr>
+                                            <td>{{project.project_name}}</td>
+                                            <td>{% autoescape off %}{{project.description|linebreaks}} {% endautoescape %}</td>
+                                            <td>{% if project.is_active %} <i class="fa fa-check-circle text-success"></i> {% else %} <i class="fa fa-times-circle text-danger"></i> {% endif %}</td>
+                                            <td class="white-space-nowrap">
+                                                {% if project.is_active %}
+                                                <a href="{% url 'admin_manage_permissions_status' project.id 'False'  %}"><i class="fa fa-times-circle text-danger"></i></a>
+                                                {% else %}
+                                                <a href="{% url 'admin_manage_permissions_status' project.id 'True'  %}"><i class="fa fa-check-circle text-success"></i></a>
+                                                {% endif %}
+                                                &nbsp;
+                                                <a href="{% url 'admin_manage_permissions_delete' project.id  %}" ><i class="fa fa-trash text-danger"></i></a>
+                                                &nbsp;
+                                                <a href="{% url 'admin_manage_permissions_update' project.id  %}"><i class="fa fa-edit"></i></a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div><!-- .animated -->
+    </div><!-- .content -->
+</div>
+
+
+{% endblock %}
+
+{% block model %}
+<div id="assign_product" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header gradient-45deg-light-blue-cyan">
+                <h5 class="modal-title">Assign Product</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group form-focus">
+                        <label class="control-label">User Id</label>
+                        <select class="js-select2" name="user_name" id="user_id" onchange=filter()>
+                            <option value="">Select-User</option>
+                            {% for user_input in instance_users %}
+                            {% if get_user_id == user_input.id %}
+                            <option value="{{user_input.id}}" selected>{{ user_input.first_name}}</option>
+                            {% else %}
+                            <option value="{{user_input.id}}" >{{ user_input.first_name}}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group form-focus textarea-form-focus">
+                        <div><span id="role_filter"></span></div>
+                    </div>
+
+            <div class="modal-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group form-focus">
+                                <label class="control-label">Product Name</label>
+                                {{ assign_form.product }}
+
+                                <label class="error">{{ assign_form.product.errors }}</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group form-focus textarea-form-focus">
+                                <label class="control-label">Product User</label>
+                                {{ assign_form.email }}
+                                <label class="error">{{product_form.email.errors}}</label>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group form-focus textarea-form-focus">
+                                    <label class="control-label">Product Password</label>
+                                    {{ assign_form.password }}
+                                    <label class="error">{{ assign_form.password.errors }}</label>
+                            <div class="col-md-12">
+                                <div class="form-group form-focus textarea-form-focus">
+                                    <label class="control-label">Time</label>
+                                    {{ assign_form.alert }}
+                                    <label class="error">{{ assign_form.alert.errors }}</label>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="m-t-20 text-center">
+                        <button class="btn common-btn">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+
+{% block extra_script %}
+{% if form_error %}
+<script>
+    $('#assign_product').modal('show')
+</script>
+{% endif %}
+<script type="text/javascript">
+    function filter(event) {
+    $.get('{{request.path}}filter/?user_name=' + $("select[name='user_name']").val(), function (result) {
+        role = result.instance_users
+        $('#role_filter').text(result.instance_users);
+
+      })
+    };
+
+</script>
+
+<!-- <script type="text/javascript">
+    var role;
+    function filter(event) {
+    $.get('{{request.path}}filter/?user_name=' + $("select[name='user_name']").val(), function (result) {
+        role = result.instance_users
+        if(role == "Agent"){
+            $(".alert-div").hide();
+        }
+        else{
+            $(".alert-div").show();
+        }
+        $('#role_filter').text(result.instance_users);
+
+      })
+    };
+
+</script> -->
+{% endblock %}

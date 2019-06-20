@@ -1,0 +1,140 @@
+{% extends 'base_template/admin_index.html' %}
+
+{% block title %}
+    <title>Apta Support | Admin - Manage Product </title>
+{% endblock %}
+
+{% block meta_tag %}
+    <meta name="description" content="" />
+    <meta property="og:title" content="JobRocket" />
+    <meta property="og:url" content="web page path" />
+    <meta property="og:description" content="">
+    <meta property="og:image" content="image PATH">
+{% endblock %}
+
+{% block body %}
+<div class="content-height">
+    <div class="breadcrumbs">
+        <div class="breadcrumbs-inner">
+            <div class="row m-0">
+                <div class="col-sm-12">
+                    <div class="page-header">
+                        <div class="page-title text-center">
+                            <h1>Manage Product</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="animated fadeIn">
+
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="card-title">List of Products</strong>
+                            <button class="btn common-btn pull-right" data-toggle="modal" data-target="#create_new_Product">Add New Product</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table  ">
+                                    <thead>
+                                        <tr>
+                                            <th>Product Name</th>
+                                            <th>Description</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for product in Instance_product %}
+                                        <tr>
+                                            <td>{{product.product_name}}</td>
+                                            <td>{% autoescape off %}{{product.description|linebreaks}} {% endautoescape %}</td>
+                                            <td>{% if product.is_active %} <i class="fa fa-check-circle text-success"></i> {% else %} <i class="fa fa-times-circle text-danger"></i> {% endif %}</td>
+                                            <td class="white-space-nowrap">
+                                                {% if project.is_active %}
+                                                <a href="{% url 'admin_manage_product_status' product.id 'False'  %}"><i class="fa fa-times-circle text-danger"></i></a>
+                                                {% else %}
+                                                <a href="{% url 'admin_manage_product_status' product.id 'True'  %}"><i class="fa fa-check-circle text-success"></i></a>
+                                                {% endif %}
+                                                &nbsp;
+                                                <a href="{% url 'admin_manage_product_delect' product.id  %}" ><i class="fa fa-trash text-danger"></i></a>
+                                                &nbsp;
+                                                <a href="{% url 'admin_manage_product_update' product.id  %}"><i class="fa fa-edit"></i></a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div><!-- .animated -->
+    </div><!-- .content -->
+</div>
+
+
+{% endblock %}
+
+{% block model %}
+<div id="create_new_Product" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header gradient-45deg-light-blue-cyan">
+                <h5 class="modal-title">Add Product</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group form-focus">
+                                <label class="control-label">Product Name</label>
+                                {{product_form.product_name}}
+                                <label class="error">{{product_form.product_name.errors}}</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group form-focus textarea-form-focus">
+                                <label class="control-label">Description</label>
+                                {{product_form.description}}
+                                <label class="error">{{product_form.description.errors}}</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group form-focus textarea-form-focus">
+                                <label class="control-label">Website Url</label>
+                                {{product_form.url}}
+                                <label class="error">{{product_form.description.url}}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-t-20 text-center">
+                        <button class="btn common-btn">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_script %}
+{% if form_error %}
+<script>
+    $('#create_new_Product').modal('show')
+</script>
+{% endif %}
+{% endblock %}

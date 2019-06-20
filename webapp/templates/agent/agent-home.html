@@ -1,0 +1,222 @@
+{% extends 'base_template/index.html' %}
+
+        {% block extra_css %}
+		<style>
+			.d-block {
+			  position: relative;
+			}
+
+			.image {
+			  display: block;
+			  width: 100%;
+			  height: auto;
+			}
+
+			.overlay {
+			  position: absolute;
+			  bottom: 100%;
+			  left: 0;
+			  right: 0;
+			  background-color: #008CBA;
+			  overflow: hidden;
+			  width: 100%;
+			  height:0;
+			  transition: .5s ease;
+			}
+
+			.d-block:hover .overlay {
+			  bottom: 0;
+			  height: 100%;
+			}
+
+			.text {
+			  white-space: nowrap;
+			  color: white;
+			  font-size: 13px;
+			  position: absolute;
+			  overflow: hidden;
+			  top: 50%;
+			  left: 50%;
+			  transform: translate(-50%, -50%);
+			  -ms-transform: translate(-50%, -50%);
+			}
+		</style>
+        {% endblock %}
+
+
+{% block body %}
+        <!--================Demo Area =================-->
+        <section class="feature_area p_85" id="demo" style="background: #e6e6e6">
+        	<div class="container">
+        		<div class="feature_inner row" style="margin-top: 50px;">
+        			<div class="col-lg-3 col-md-6">
+						<a href="http://aptahr.com" class="feature_item_con">
+	        				<div class="feature_item">
+								<span class="d-block">
+									<img src="img/demo_one.png" alt="" style="max-width: 100%;">
+									<div class="overlay">
+								    	<div class="text">
+								    		<div>User Name : Lorem Ipsume</div>
+								    		<div>Password : Lorem Ipsume</div>
+								    		<div>Site Link : Lorem Ipsume</div>
+								    	</div>
+								  	</div>
+								</span>
+							</div>
+							<span class="d-block text-center" >
+								<h4 class="mt-3 color_666">AptaHR</h4>
+							</span>
+						</a>
+        			</div>
+        			<div class="col-lg-3 col-md-6">
+						<a href="" class="feature_item_con">
+	        				<div class="feature_item">
+								<span class="d-block">
+									<img src="img/aiila.png" alt="" style="max-width: 100%;">
+									<div class="overlay">
+								    	<div class="text">
+								    		<div>User Name : Lorem Ipsume</div>
+								    		<div>Password : Lorem Ipsume</div>
+								    		<div>Site Link : Lorem Ipsume</div>
+								    	</div>
+								  	</div>
+								</span>
+							</div>
+							<span class="d-block text-center" >
+								<h4 class="mt-3 color_666">Aiila</h4>
+							</span>
+						</a>
+        			</div>
+        			<div class="col-lg-3 col-md-6">
+						<a href="https://jobrocket.co.uk/" class="feature_item_con">
+	        				<div class="feature_item">
+								<span class="d-block">
+									<img src="img/jobrocket.png" alt="" style="max-width: 100%;">
+									<div class="overlay">
+								    	<div class="text">
+								    		<div>User Name : Lorem Ipsume</div>
+								    		<div>Password : Lorem Ipsume</div>
+								    		<div>Site Link : Lorem Ipsume</div>
+								    	</div>
+								  	</div>
+								</span>
+							</div>
+							<span class="d-block text-center" >
+								<h4 class="mt-3 color_666">Job Rocket</h4>
+							</span>
+						</a>
+        			</div>
+        			<div class="col-lg-3 col-md-6">
+						<a href="https://teknovel.herokuapp.com/" class="feature_item_con">
+	        				<div class="feature_item">
+								<span class="d-block">
+									<img src="img/teknovel.png" alt="" style="max-width: 100%;">
+									<div class="overlay">
+								    	<div class="text">
+								    		<div>User Name : Lorem Ipsume</div>
+								    		<div>Password : Lorem Ipsume</div>
+								    		<div>Site Link : Lorem Ipsume</div>
+								    	</div>
+								  	</div>
+								</span>
+							</div>
+							<span class="d-block text-center" >
+								<h4 class="mt-3 color_666">Teknovel</h4>
+							</span>
+						</a>
+					</div>
+					<div class="col-lg-3 col-md-6">
+						<a href="https://teknovel.herokuapp.com/" class="feature_item_con">
+							<div class="feature_item">
+								<span class="d-block">
+									<img src="img/teknovel.png" alt="" style="max-width: 100%;">
+									<div class="overlay">
+								    	<div class="text">
+								    		<div>User Name : Lorem Ipsume</div>
+								    		<div>Password : Lorem Ipsume</div>
+								    		<div>Site Link : Lorem Ipsume</div>
+								    	</div>
+								  	</div>
+								</span>
+							</div>
+							<span class="d-block text-center">
+								<h4 class="mt-3 color_666">Teknovel</h4>
+							</span>
+						</a>
+					</div>
+					<div class="col-lg-3 col-md-6">
+						<a href="https://jobrocket.co.uk/" class="feature_item_con">
+							<div class="feature_item">
+								<span class="d-block">
+									<img src="img/jobrocket.png" alt="" style="max-width: 100%;">
+									<div class="overlay">
+								    	<div class="text">
+								    		<div>User Name : Lorem Ipsume</div>
+								    		<div>Password : Lorem Ipsume</div>
+								    		<div>Site Link : Lorem Ipsume</div>
+								    	</div>
+								  	</div>
+								</span>
+							</div>
+							<span class="d-block text-center">
+								<h4 class="mt-3 color_666">Job Rocket</h4>
+							</span>
+						</a>
+					</div>
+					<div class="col-lg-3 col-md-6">
+						<a href="" class="feature_item_con">
+							<div class="feature_item">
+								<span class="d-block">
+									<img src="img/aiila.png" alt="" style="max-width: 100%;">
+									<div class="overlay">
+								    	<div class="text">
+								    		<div>User Name : Lorem Ipsume</div>
+								    		<div>Password : Lorem Ipsume</div>
+								    		<div>Site Link : Lorem Ipsume</div>
+								    	</div>
+								  	</div>
+								</span>
+							</div>
+							<span class="d-block text-center">
+								<h4 class="mt-3 color_666">Aiila</h4>
+							</span>
+						</a>
+					</div>
+					<div class="col-lg-3 col-md-6">
+						<a href="http://aptahr.com/" class="feature_item_con">
+							<div class="feature_item">
+								<span class="d-block">
+									<img src="img/demo_one.png" alt="" style="max-width: 100%;">
+									<div class="overlay">
+								    	<div class="text">
+								    		<div>User Name : Lorem Ipsume</div>
+								    		<div>Password : Lorem Ipsume</div>
+								    		<div>Site Link : Lorem Ipsume</div>
+								    	</div>
+								  	</div>
+								</span>
+							</div>
+							<span class="d-block text-center">
+								<h4 class="mt-3 color_666">AptaHR</h4>
+							</span>
+						</a>
+					</div>
+        		</div>
+        	</div>
+        </section>
+        <!--================End Demo Area =================-->
+            {% endblock %}
+
+        {% block javascript %}
+		<script>
+			$("#flexiselDemo3").flexisel({
+				visibleItems: 3,
+				itemsToScroll: 1,
+				autoPlay: {
+					enable: true,
+					interval: 5000,
+					pauseOnHover: true
+				}
+			});
+		</script>
+            {% endblock %}

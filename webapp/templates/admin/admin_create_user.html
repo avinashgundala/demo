@@ -1,0 +1,185 @@
+{% extends 'base_template/index.html' %}
+        {% block extra_css %}
+        
+        <style type="text/css">
+            /*---------------------------------------------*/
+            input {
+                outline: none;
+                border: none;
+            }
+
+            input[type="number"] {
+                -moz-appearance: textfield;
+                appearance: none;
+                -webkit-appearance: none;
+            }
+
+            input[type="number"]::-webkit-outer-spin-button,
+            input[type="number"]::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+            }
+
+            textarea {
+              outline: none;
+              border: none;
+            }
+
+            textarea:focus, input:focus {
+              border-color: transparent !important;
+            }
+
+            input:focus::-webkit-input-placeholder { color:transparent; }
+            input:focus:-moz-placeholder { color:transparent; }
+            input:focus::-moz-placeholder { color:transparent; }
+            input:focus:-ms-input-placeholder { color:transparent; }
+
+            textarea:focus::-webkit-input-placeholder { color:transparent; }
+            textarea:focus:-moz-placeholder { color:transparent; }
+            textarea:focus::-moz-placeholder { color:transparent; }
+            textarea:focus:-ms-input-placeholder { color:transparent; }
+
+            input::-webkit-input-placeholder { color: #adadad;}
+            input:-moz-placeholder { color: #adadad;}
+            input::-moz-placeholder { color: #adadad;}
+            input:-ms-input-placeholder { color: #adadad;}
+
+            textarea::-webkit-input-placeholder { color: #adadad;}
+            textarea:-moz-placeholder { color: #adadad;}
+            textarea::-moz-placeholder { color: #adadad;}
+            textarea:-ms-input-placeholder { color: #adadad;}
+
+            /*---------------------------------------------*/
+            button {
+                outline: none !important;
+                border: none;
+                background: transparent;
+            }
+
+            button:hover {
+                cursor: pointer;
+            }
+
+            iframe {
+                border: none !important;
+            }
+        </style>
+
+        {% endblock %}
+
+        {% block body %}
+
+        <div class="container-contact100">
+            <div class="wrap-contact100" style="margin-top: 100px;">
+                <form class="contact100-form validate-form" method="POST" >
+                    <span class="contact100-form-title">
+                        Admin Login Screen
+                    </span>
+                    {% csrf_token %}
+                    <div class="wrap-input100 validate-input bg1" data-validate="Please Type Your Name">
+                        <span class="label-input100">Full Name</span>
+                        <!-- <input class="input100" type="text" name="name" placeholder="Enter Your Name"> -->
+                        {{ form.first_name }}
+                    </div>
+
+                    <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate = "Enter Your Email (e@a.x)">
+                        <span class="label-input100">Email</span>
+                        <!-- <input class="input100" type="text" name="email" placeholder="Enter Your Email "> -->
+                        {{ form.email }}
+                    </div>
+
+             <div class="wrap-input100 bg1 rs1-wrap-input100">
+                        <span class="label-input100">Password</span>
+                        <input type="text" name="password1" id="password1" value={{password1}} class="input100" autocomplete="nope" placeholder="Password" required="" maxlength="254" autofocus="" readonly>
+                        <input type="hidden" name="password2" id="password2"  value={{password1}} class="input100" autocomplete="nope" placeholder="Confirm Password" required="" maxlength="254" autofocus="">
+                    </div>
+
+                    <div class="wrap-input100 input100-select bg1 rs1-wrap-input100">
+                        <span class="label-input100">Role</span>
+                        <div>
+                             <select class="js-select2" id="usertype" name="user_type">
+                             <option>Select Role</option>
+                             <option>Agent</option>
+                                <option>Client</option>
+                            </select>
+
+                            <div class="dropDownSelect2"></div>
+                        </div>
+                    </div>
+
+                    <!-- <div id="Validity_id" class="wrap-input100 bg1 rs1-wrap-input100">
+                        <span class="label-input100">Validity</span>
+
+                        <div class="pf-field date form_time" data-date="" data-date-format="hh:ii" data-link-field="txtvalidity" data-link-format="hh:ii">
+                            <input class="input100" name="validity" type="text" placeholder="Enter time in Hrs" id="txtvalidity" data-date="" data-date-format="hh:ii" data-link-field="date-in3" data-link-format="hh:ii" autocomplete="off" class="common-datepicker">
+                        </div>
+                    </div> -->
+
+                    <div class="container-contact100-form-btn">
+                        <button class="contact100-form-btn">
+                            <span>
+                                Submit
+                                <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+                            </span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        {% endblock %}
+
+    {% block javascript %}
+    <script type="text/javascript">
+        $(function(){
+            $('#txtvalidity').datetimepicker({
+                weekStart: 1,
+                todayBtn: 0,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 1,
+                minView: 0,
+                maxView: 1,
+                forceParse: 0
+            });
+            //
+            // $("input[name=txtvalidity]").click("dp.change", function (e) {
+            //     $(this).datetimepicker('show');
+            // });
+        });
+    </script>
+    <!-- script for password match -->
+    <script type="text/javascript">
+        $(".pasetpasscontent").val($(".copypasscontent").val());
+    </script>
+    <script>
+        window.onload = function () {
+            document.getElementById("password1").onchange = validatePassword;
+            document.getElementById("password2").onchange = validatePassword;
+        }
+
+        function validatePassword() {
+            var pass2 = document.getElementById("password2").value;
+            var pass1 = document.getElementById("password1").value;
+            if (pass1 != pass2)
+                document.getElementById("password2").setCustomValidity("Passwords Don't Match");
+            else
+                document.getElementById("password2").setCustomValidity('');
+            //empty string means no validation error
+        }
+    </script>
+    <script type="text/javascript">
+        $("#Validity_id").hide();
+        $('#usertype').on('change', function() {
+          if(this.value == "Client"){
+              $("#Validity_id").show();
+              $('input[name="validity"]').attr("required", true);
+          }
+          else{
+              $("#Validity_id").hide();
+              $('input[name="validity"]').attr("required", false);
+          }
+        });
+
+    </script>
+    <!-- script for password match -->
+    {% endblock %}
